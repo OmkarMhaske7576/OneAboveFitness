@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context="com.one.above.fitness.bluetooth_communication.BluetoothCommunication">
+
+    <TextView
+        android:id="@+id/connectedDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="Connected device : "
+        android:textColor="@color/white"
+        android:textSize="@dimen/popupSubTxt"
+        android:textStyle="italic"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/connectedDevice">
+
+        <Button
+            android:id="@+id/btnONOFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_outline"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="ON/OFF"
+            android:textColor="@color/AppPrimaryColor" />
+
+        <Button
+            android:id="@+id/btnDiscoverable_on_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/connectedDevice"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_outline"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="btnEnableDisable_Discoverable"
+            android:padding="5dp"
+            android:text="Enable Discoverable"
+            android:textColor="@color/AppPrimaryColor" />
+
+        <Button
+            android:id="@+id/btnFindUnpairedDevices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_outline"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="btnDiscover"
+            android:text="Discover"
+            android:textColor="@color/AppPrimaryColor" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnDiscoverable_on_off"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:background="@color/darkerGrayBtn"
+                android:hint="Enter Text Here"
+                android:paddingLeft="5dp" />
+
+            <Button
+                android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lvNewDevices"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/editText"
+                android:background="@drawable/button_outline"
+                android:text="SEND"
+                android:textColor="@color/AppPrimaryColor" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvNewDevices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnStartConnection"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp" />
+
+        <Button
+            android:id="@+id/btnStartConnection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnFindUnpairedDevices"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_outline"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="5dp"
+            android:text="Start Connection"
+            android:textColor="@color/AppPrimaryColor" />
+    </RelativeLayout>
+</RelativeLayout>

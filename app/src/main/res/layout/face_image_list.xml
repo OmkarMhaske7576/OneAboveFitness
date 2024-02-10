@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/userLayout"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/rectangle_outline_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/person_img" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_weight="3"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/memberId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Member Id : "
+            android:textSize="@dimen/normalTxt" />
+
+
+    </LinearLayout>
+
+    <RadioButton
+        android:id="@+id/selectImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="20dp"
+        android:buttonTint="@color/btnIconColor" />
+
+</LinearLayout>

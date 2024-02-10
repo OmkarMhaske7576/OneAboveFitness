@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/userLayout"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/rectangle_outline_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:elevation="20dp"
+        android:innerRadius="0dp"
+        android:shape="ring">
+
+        <ImageView
+            android:id="@+id/userImg"
+            android:layout_width="98dp"
+            android:layout_height="98dp"
+            android:src="@drawable/person_img" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_weight="3"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name : "
+            android:textSize="@dimen/normalTxt" />
+
+        <TextView
+            android:id="@+id/memberId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Member Id : "
+            android:textSize="@dimen/normalTxt" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/viewFaces"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="10dp"
+        android:text="View all faces"
+        android:textAllCaps="false"
+        android:textColor="@color/buttonText" />
+
+    <Button
+        android:id="@+id/addFace"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="10dp"
+        android:text="Add more faces"
+        android:textAllCaps="false"
+        android:textColor="@color/buttonText" />
+
+    <Button
+        android:id="@+id/deleteMember"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="10dp"
+        android:text="Delete Member"
+        android:textAllCaps="false"
+        android:textColor="@color/buttonText" />
+
+</LinearLayout>

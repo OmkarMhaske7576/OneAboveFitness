@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OneAboveFitness</string>
+
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
+    <string name="footer_txt">Powered By:iStream E Solutions. \nVersion: 1.75.0</string>
+</resources>

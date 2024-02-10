@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- <color name="Transparent">#00000000</color>
+     <color name="AppPrimaryColor">#ff5722</color>
+     <color name="AppBackgroundColor">#fafafa</color>
+     <color name="ButtonColor">#fff2ee</color>
+     <color name="AppNoteBackground">#2C7E57C2</color>
+     <color name="AppTransparentColor">#F2000000</color>
+     <color name="SuccessColor">#74cb51</color>-->
+
+    <color name="Transparent">#00000000</color>
+    <color name="AppPrimaryColor">#bf1116</color>
+    <color name="AppBackgroundColor">#FF000000</color>
+    <color name="ButtonColor">#FFFFFFFF</color>
+    <color name="AppNoteBackground">#2C7E57C2</color>
+    <color name="AppTransparentColor">#CC000000</color>
+    <color name="SuccessColor">#74cb51</color>
+    <color name="errorColor">#B00020</color>
+    <color name="buttonText">#bf1116</color>
+    <color name="transparentColor">#80ffffff</color>
+    <color name="btnIconColor">#ff5722</color>
+    <color name="inputBgColor">#c9c9f1</color>
+    <color name="darkerGrayBtn">@android:color/darker_gray</color>
+    <color name="greenColor">#37AA09</color>
+</resources>

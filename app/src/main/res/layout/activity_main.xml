@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dimen_10dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/bluetoothTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="Bluetooth : Off || Device name : "
+                        android:textAllCaps="true"
+                        android:textColor="@color/errorColor"
+                        android:textSize="@dimen/popupSubTxt"
+                        android:textStyle="italic" />
+
+                    <EditText
+                        android:id="@+id/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_below="@+id/bluetoothTxt"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="50dp"
+                        android:background="@color/inputBgColor"
+                        android:hint="Type three characters of name !!!"
+                        android:paddingLeft="20dp" />
+
+                    <LinearLayout
+                        android:id="@+id/mainLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editText"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp">
+
+                        <com.one.above.fitness.helper.MyKeyboard
+                            android:id="@+id/keyboard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/editText"
+                            android:orientation="vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mainLayout"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/setting"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/setting_btn"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:textAllCaps="false"
+                            android:textColor="@color/buttonText" />
+
+                        <Button
+                            android:id="@+id/homeBtn"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/home_btn"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:textAllCaps="false"
+                            android:textColor="@color/buttonText" />
+
+                        <!--
+                                            <Button
+                                                android:id="@+id/BluetoothSetting"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="60dp"
+                                                android:layout_marginRight="20dp"
+                                                android:clickable="true"
+                                                android:text="Bluetooth Setting"
+                                                android:foreground="?android:attr/selectableItemBackground"
+                                                android:gravity="center"
+                                                android:textAllCaps="false"
+                                                android:textColor="@color/buttonText" />
+                        -->
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="300dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="-20dp"
+                        android:src="@drawable/oneabovelogo_splash" />
+
+                    <androidx.camera.view.PreviewView
+                        android:id="@+id/previewView"
+                        android:layout_width="35mm"
+                        android:layout_height="35mm"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        android:background="@android:drawable/screen_background_light_transparent"
+                        android:elevation="1dp"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        tools:srcCompat="@android:drawable/screen_background_light_transparent" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dimen_20dp"
+                        android:background="@color/AppNoteBackground"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="35mm"
+                            android:layout_height="35mm"
+                            android:background="@color/AppNoteBackground"
+                            android:elevation="1dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintVertical_bias="0.435"
+                            tools:srcCompat="@android:drawable/screen_background_light_transparent" />
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/container">
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="164dp"
+                            android:layout_height="wrap_content"
+                            android:hint=""
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView"
+                            app:layout_constraintHorizontal_bias="0.487"
+                            app:layout_constraintStart_toStartOf="@+id/imageView"
+                            app:layout_constraintTop_toTopOf="@+id/imageView"
+                            app:layout_constraintVertical_bias="0.479" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="164dp"
+                            android:layout_height="180dp"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView"
+                            app:layout_constraintHorizontal_bias="0.487"
+                            app:layout_constraintStart_toStartOf="@+id/imageView"
+                            app:layout_constraintTop_toTopOf="@+id/imageView"
+                            app:layout_constraintVertical_bias="0.914" />
+
+                        <TextView
+                            android:id="@+id/textAbovePreview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toTopOf="@+id/imageView"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.498"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <ImageView
+                        android:id="@+id/qr"
+                        android:layout_width="35mm"
+                        android:layout_height="30mm"
+                        android:layout_gravity="center"
+                        android:src="@drawable/qr_demo"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Primary menus">
+
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/account_setting"
+            android:title="My account" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings" />
+
+        <item
+            android:id="@+id/logout"
+            android:title="Logout" />
+
+    </group>
+</menu>

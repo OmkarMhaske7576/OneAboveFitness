@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "263888773749",
+    "project_id": "oneabovefitness-78c1e",
+    "storage_bucket": "oneabovefitness-78c1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263888773749:android:33a3a86dcad5085c924e3c",
+        "android_client_info": {
+          "package_name": "com.one.above.fitness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe8BQMz_6OpfQ470Ges3Xk-DdOY6hCSHI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

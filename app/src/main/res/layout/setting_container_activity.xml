@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:scrollbars="none"
+    tools:context=".activities.SettingContainerActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_icon"
+            android:clickable="true" />
+
+        <LinearLayout
+            android:id="@+id/branchSetting"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!--  <ImageView
+                  android:layout_width="95dp"
+                  android:layout_height="95dp"
+                  android:layout_marginLeft="30dp"
+                  android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="Branch Setting"
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dialogTimeSetting"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!--  <ImageView
+                  android:layout_width="95dp"
+                  android:layout_height="95dp"
+                  android:layout_marginLeft="30dp"
+                  android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="Set Dialog Time "
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bluetoothSetting"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!--  <ImageView
+                  android:layout_width="95dp"
+                  android:layout_height="95dp"
+                  android:layout_marginLeft="30dp"
+                  android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="Bluetooth Setting"
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scanQR_saveAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!--  <ImageView
+                  android:layout_width="95dp"
+                  android:layout_height="95dp"
+                  android:layout_marginLeft="30dp"
+                  android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="Scan QR and Save Attendance"
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/faceRegister"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- <ImageView
+                 android:layout_width="95dp"
+                 android:layout_height="95dp"
+                 android:layout_marginLeft="30dp"
+                 android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="Register"
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/viewMembers"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- <ImageView
+                 android:layout_width="95dp"
+                 android:layout_height="95dp"
+                 android:layout_marginLeft="30dp"
+                 android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="View Members"
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/saveDirectoryData"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- <ImageView
+                 android:layout_width="95dp"
+                 android:layout_height="95dp"
+                 android:layout_marginLeft="30dp"
+                 android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="Save data from folder"
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/downloadData"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- <ImageView
+                 android:layout_width="95dp"
+                 android:layout_height="95dp"
+                 android:layout_marginLeft="30dp"
+                 android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="Download Data"
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/uploadData"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- <ImageView
+                 android:layout_width="95dp"
+                 android:layout_height="95dp"
+                 android:layout_marginLeft="30dp"
+                 android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="Upload Data"
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/hyperParameterSetting"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rectangle_outline_bg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!--  <ImageView
+                  android:layout_width="95dp"
+                  android:layout_height="95dp"
+                  android:layout_marginLeft="30dp"
+                  android:src="@drawable/person_img" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="Set Hyperparameters"
+                android:textSize="@dimen/headingTxt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:text=">"
+                android:textSize="10mm" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

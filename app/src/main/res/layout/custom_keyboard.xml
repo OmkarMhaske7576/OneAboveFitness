@@ -1,0 +1,330 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/A_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="A"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/B_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="B"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/C_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="C"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/D_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="D"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/E_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="E"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/F_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="F"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/G_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="G"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/H_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="H"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/I_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="I"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/J_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="J"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/K_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="K"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/L_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="L"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/M_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="M"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/N_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="N"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/O_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="O"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/P_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="P"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/Q_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="Q"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/R_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="R"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/S_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="S"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/T_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="T"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/U_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="U"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/V_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="V"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/W_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="W"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/X_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="X"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/Y_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="Y"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/Z_btn"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="1"
+                android:text="Z"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_delete"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="2"
+                android:text="Delete"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt" />
+
+
+            <Button
+                android:id="@+id/button_enter"
+                android:layout_width="0dp"
+                android:layout_height="55sp"
+                android:layout_weight="2"
+                android:text="Enter"
+                android:textColor="@color/AppPrimaryColor"
+                android:textSize="@dimen/normalTxt" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</merge>

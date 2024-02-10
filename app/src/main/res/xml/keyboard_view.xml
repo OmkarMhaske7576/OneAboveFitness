@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:horizontalGap="10%p"
+    android:keyWidth="40%p"
+    android:keyHeight="10%p"
+    android:verticalGap="0%p">
+
+    <Row>
+
+        <Key
+            android:codes="a"
+            android:horizontalGap="1%p"
+            android:keyLabel="a"
+            android:keyOutputText="a" />
+        <Key
+            android:codes="b"
+            android:horizontalGap="1%p"
+            android:keyLabel="b"
+            android:keyOutputText="b" />
+        <Key
+            android:codes="c"
+            android:horizontalGap="1%p"
+            android:keyLabel="c"
+            android:keyOutputText="c" />
+        <Key
+            android:codes="d"
+            android:horizontalGap="1%p"
+            android:keyLabel="d"
+            android:keyOutputText="d" />
+        <Key
+            android:codes="e"
+            android:horizontalGap="1%p"
+            android:keyLabel="e"
+            android:keyOutputText="e" />
+
+        <Key
+            android:codes="f"
+            android:horizontalGap="1%p"
+            android:keyLabel="f"
+            android:keyOutputText="f" />
+        <Key
+            android:codes="g"
+            android:horizontalGap="1%p"
+            android:keyLabel="g"
+            android:keyOutputText="g" />
+        <Key
+            android:codes="h"
+            android:horizontalGap="1%p"
+            android:keyLabel="h"
+            android:keyOutputText="h" />
+        <Key
+            android:codes="i"
+            android:horizontalGap="1%p"
+            android:keyLabel="i"
+            android:keyOutputText="i" />
+    </Row>
+    <Row>
+        <Key
+            android:codes="j"
+            android:horizontalGap="1%p"
+            android:keyLabel="j"
+            android:keyOutputText="j" />
+
+        <Key
+            android:codes="k"
+            android:horizontalGap="1%p"
+            android:keyLabel="k"
+            android:keyOutputText="k" />
+
+        <Key
+            android:codes="l"
+            android:horizontalGap="1%p"
+            android:keyLabel="l"
+            android:keyOutputText="l" />
+
+        <Key
+            android:codes="m"
+            android:horizontalGap="1%p"
+            android:keyLabel="m"
+            android:keyOutputText="m" />
+
+        <Key
+            android:codes="n"
+            android:horizontalGap="1%p"
+            android:keyLabel="n"
+            android:keyOutputText="n" />
+
+        <Key
+            android:codes="o"
+            android:horizontalGap="1%p"
+            android:keyLabel="o"
+            android:keyOutputText="o" />
+
+        <Key
+            android:codes="p"
+            android:horizontalGap="1%p"
+            android:keyLabel="p"
+            android:keyOutputText="p" />
+
+        <Key
+            android:codes="q"
+            android:horizontalGap="1%p"
+            android:keyLabel="q"
+            android:keyOutputText="q" />
+
+        <Key
+            android:codes="r"
+            android:horizontalGap="1%p"
+            android:keyLabel="r"
+            android:keyOutputText="r" />
+    </Row>
+
+    <Row>
+        <Key
+            android:codes="s"
+            android:horizontalGap="1%p"
+            android:keyLabel="s"
+            android:keyOutputText="s" />
+        <Key
+            android:codes="t"
+            android:horizontalGap="1%p"
+            android:keyLabel="t"
+            android:keyOutputText="t" />
+        <Key
+            android:codes="u"
+            android:horizontalGap="1%p"
+            android:keyLabel="u"
+            android:keyOutputText="u" />
+        <Key
+            android:codes="v"
+            android:horizontalGap="1%p"
+            android:keyLabel="v"
+            android:keyOutputText="v" />
+        <Key
+            android:codes="w"
+            android:horizontalGap="1%p"
+            android:keyLabel="w"
+            android:keyOutputText="w" />
+
+        <Key
+            android:codes="x"
+            android:horizontalGap="1%p"
+            android:keyLabel="x"
+            android:keyOutputText="x" />
+        <Key
+            android:codes="y"
+            android:horizontalGap="1%p"
+            android:keyLabel="y"
+            android:keyOutputText="y" />
+        <Key
+            android:codes="z"
+            android:horizontalGap="1%p"
+            android:keyLabel="z"
+            android:keyOutputText="z" />
+
+    </Row>
+
+    <Row>
+        <Key
+            android:codes="-1"
+            android:horizontalGap="4%p"
+            android:keyWidth="31%p"
+            android:keyIcon="@drawable/back_btn"
+            android:keyOutputText="backspace" />
+        <Key
+            android:codes="100"
+            android:horizontalGap="4%p"
+            android:keyWidth="60%p"
+            android:keyLabel="Enter"
+            android:keyOutputText="Enter" />
+    </Row>
+</Keyboard>
