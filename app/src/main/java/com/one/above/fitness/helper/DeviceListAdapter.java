@@ -16,7 +16,6 @@ import com.one.above.fitness.R;
 
 import java.util.ArrayList;
 
-
 public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
 
     private LayoutInflater mLayoutInflater;

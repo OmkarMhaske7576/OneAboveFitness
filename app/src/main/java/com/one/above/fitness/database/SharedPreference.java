@@ -43,7 +43,7 @@ public class SharedPreference {
     }
 
     public static float getHyperParameter(Context ctx) {
-        return Float.parseFloat(new Gson().fromJson(getSharedPreferences(ctx).getString("FACE_DISTANCE", "1.0f"), String.class));
+        return Float.parseFloat(new Gson().fromJson(getSharedPreferences(ctx).getString("FACE_DISTANCE", "0.7f"), String.class));
     }
 
     public static void settHyperParameter(Context ctx, String value) {

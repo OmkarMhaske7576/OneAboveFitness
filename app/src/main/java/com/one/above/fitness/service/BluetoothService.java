@@ -36,8 +36,7 @@ public class BluetoothService {
     private clientSock clientSock = null;
     private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     public static BluetoothSocket clientSocket;
-
-    public void sendDataViaBluetooth() {
+    private void sendDataViaBluetooth() {
         try {
             BluetoothDeviceName = SharedPreference.getBluetoothDeviceName(mContext);
             if (clientSocket == null)

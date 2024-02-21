@@ -825,6 +825,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (!isUserFound && start) {
+                    bluetoothService.startBluetoothService("FOFF","");
                     Utility.showToast(context, "USER NOT FOUND !! \nPLEASE RETRY AGAIN !!");
                     homeBtn.callOnClick();
                 }
