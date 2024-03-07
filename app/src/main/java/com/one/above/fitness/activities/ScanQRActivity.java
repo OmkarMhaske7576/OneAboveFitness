@@ -19,7 +19,6 @@ import com.one.above.fitness.service.BluetoothService;
 import com.one.above.fitness.utility.Utility;
 
 public class ScanQRActivity extends AppCompatActivity {
-
     AppCompatButton scanQR;
     Context context;
     ImageButton backBtn;
@@ -73,29 +72,28 @@ public class ScanQRActivity extends AppCompatActivity {
             if (intentResult.getContents() == null) {
                 Utility.showToast(context, "Cancelled !!");
             } else {
-                // QR format memberId@@branchNo@@date@@time
+                // QR format memberId@@branchNo@@type@@date@@time
                 String barcodeData = intentResult.getContents();
                 Log.d(TAG, "barcode data  >>> " + barcodeData);
-                new AsyncCall().execute(barcodeData.split("@@")[0]);
+                new AsyncCall().execute(barcodeData.split("@@")[0],barcodeData.split("@@")[2]);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    private void saveAttendance(String memberNo) {
+    private void saveAttendance(String memberNo, String type) {
         Log.d("memberNo", memberNo);
         if (memberNo.trim().length() > 0) {
             bluetoothService = new BluetoothService(ScanQRActivity.this);
-            bluetoothService.startBluetoothService("ON", memberNo);
+            bluetoothService.startBluetoothService("ON", memberNo,type);
         }
     }
 
     private class AsyncCall extends AsyncTask<String, Void, Void> {
-
         @Override
         protected Void doInBackground(String... strings) {
-            saveAttendance(strings[0]);
+            saveAttendance(strings[0],strings[1]);
             return null;
         }
     }

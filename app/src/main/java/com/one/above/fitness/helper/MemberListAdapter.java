@@ -135,7 +135,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Re
                         String dataString = mOriginalValues.get(i).getName();
                         String dataMemberId = mOriginalValues.get(i).getMemberID();
                         if (dataMemberId.toLowerCase().startsWith(constraint.toString()) || dataString.toLowerCase().startsWith(constraint.toString())) {
-                            FilteredArrList.add(new FaceData(mOriginalValues.get(i).getId(), mOriginalValues.get(i).getName(), mOriginalValues.get(i).getMemberID(), mOriginalValues.get(i).getDistance(), mOriginalValues.get(i).getExtra(), mOriginalValues.get(i).getStartTime(), mOriginalValues.get(i).getEndTime(), mOriginalValues.get(i).getTimeFormat(), mOriginalValues.get(i).getUserImage(),mOriginalValues.get(i).getBranchno()));
+                            FilteredArrList.add(new FaceData(mOriginalValues.get(i).getId(), mOriginalValues.get(i).getName(), mOriginalValues.get(i).getMemberID(), mOriginalValues.get(i).getDistance(), mOriginalValues.get(i).getExtra(), mOriginalValues.get(i).getStartTime(), mOriginalValues.get(i).getEndTime(), mOriginalValues.get(i).getTimeFormat(), mOriginalValues.get(i).getUserImage(),mOriginalValues.get(i).getBranchno(),mOriginalValues.get(i).getType()));
                         }
                     }
                     // set the Filtered result to return

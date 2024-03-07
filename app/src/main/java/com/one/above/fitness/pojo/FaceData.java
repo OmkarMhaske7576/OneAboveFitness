@@ -14,10 +14,10 @@ public class FaceData implements Serializable {
     private String endTime;
     private String timeFormat;
     private String Branchno;
+    private String type;
     private transient Bitmap userImage;
-
     public FaceData(String id, String name, String memberID, Float distance, Object extra, String startTime, String endTime, String timeFormat,
-                    Bitmap userImage, String Branchno) {
+                    Bitmap userImage, String Branchno, String type) {
         this.id = id;
         this.name = name;
         this.memberID = memberID;
@@ -28,6 +28,15 @@ public class FaceData implements Serializable {
         this.timeFormat = timeFormat;
         this.userImage = userImage;
         this.Branchno = Branchno;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getStartTime() {

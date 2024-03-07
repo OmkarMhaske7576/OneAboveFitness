@@ -33,12 +33,11 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     public SQLiteDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String CREATE_TABLE_FACEDATA = "CREATE TABLE " + TABLE_FACE_DATA + "(" + "id INTEGER PRIMARY KEY, name TEXT, memberID TEXT, distance LONG, extra BLOB, startTime TEXT, endTime TEXT, timeFormat TEXT, userImg BLOB , Branchno TEXT " + ")";
+        String CREATE_TABLE_FACEDATA = "CREATE TABLE " + TABLE_FACE_DATA + "(" + "id INTEGER PRIMARY KEY, name TEXT, memberID TEXT, distance LONG, extra BLOB, startTime TEXT, endTime TEXT, timeFormat TEXT, userImg BLOB , Branchno TEXT , type TEXT" + ")";
         String CREATE_TABLE_IMGDATA = "CREATE TABLE " + TABLE_IMAGE_DATA + "(" + "id TEXT PRIMARY KEY, userId TEXT, imageData BLOB, extra BLOB, isSelected INTEGER " + ")";
 
         db.execSQL(CREATE_TABLE_FACEDATA);
@@ -135,6 +134,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
             values.put("timeFormat", faceData.getTimeFormat());
             values.put("userImg", getBitmapAsByteArray(faceData.getUserImage()));
             values.put("Branchno", faceData.getBranchno());
+            values.put("type", faceData.getType());
 
             db.insert(TABLE_FACE_DATA, null, values);
             db.close();
@@ -154,14 +154,14 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
             SQLiteDatabase db = this.getReadableDatabase();
 
-            Cursor cursor = db.query(true, TABLE_FACE_DATA, new String[]{"id", "name", "memberID", "distance", "extra", "startTime", "endTime", "timeFormat", "userImg", "Branchno"}, "memberID = ?", new String[]{memberID}, null, null, null, null);
+            Cursor cursor = db.query(true, TABLE_FACE_DATA, new String[]{"id", "name", "memberID", "distance", "extra", "startTime", "endTime", "timeFormat", "userImg", "Branchno","type"}, "memberID = ?", new String[]{memberID}, null, null, null, null);
 
             if (cursor.moveToFirst()) {
                 do {
 
                     byte[] imgByte = cursor.getBlob(8);
 
-                    FaceData faceData = new FaceData(cursor.getString(0), cursor.getString(1), cursor.getString(2), Float.parseFloat(cursor.getString(3)), Utility.readByte(cursor.getBlob(4)), cursor.getString(5), cursor.getString(6), cursor.getString(7), BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length), cursor.getString(9));
+                    FaceData faceData = new FaceData(cursor.getString(0), cursor.getString(1), cursor.getString(2), Float.parseFloat(cursor.getString(3)), Utility.readByte(cursor.getBlob(4)), cursor.getString(5), cursor.getString(6), cursor.getString(7), BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length), cursor.getString(9), cursor.getString(10));
 
                     faceDataList.add(faceData);
 
@@ -186,14 +186,14 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
             SQLiteDatabase db = this.getReadableDatabase();
 
-            Cursor cursor = db.query(true, TABLE_FACE_DATA, new String[]{"id", "name", "memberID", "distance", "extra", "startTime", "endTime", "timeFormat", "userImg", "Branchno"}, "name" + " LIKE ?", new String[]{name + "%"}, null, null, null, null);
+            Cursor cursor = db.query(true, TABLE_FACE_DATA, new String[]{"id", "name", "memberID", "distance", "extra", "startTime", "endTime", "timeFormat", "userImg", "Branchno", "type"}, "name" + " LIKE ?", new String[]{name + "%"}, null, null, null, null);
 
             if (cursor.moveToFirst()) {
                 do {
 
                     byte[] imgByte = cursor.getBlob(8);
 
-                    FaceData faceData = new FaceData(cursor.getString(0), cursor.getString(1), cursor.getString(2), Float.parseFloat(cursor.getString(3)), Utility.readByte(cursor.getBlob(4)), cursor.getString(5), cursor.getString(6), cursor.getString(7), BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length), cursor.getString(9));
+                    FaceData faceData = new FaceData(cursor.getString(0), cursor.getString(1), cursor.getString(2), Float.parseFloat(cursor.getString(3)), Utility.readByte(cursor.getBlob(4)), cursor.getString(5), cursor.getString(6), cursor.getString(7), BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length), cursor.getString(9), cursor.getString(10));
 
                     faceDataList.add(faceData);
 
@@ -227,13 +227,13 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);*/
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(true, TABLE_FACE_DATA, new String[]{"id", "name", "memberID", "distance", "extra", "startTime", "endTime", "timeFormat", "userImg", "Branchno"}, "Branchno = ?", new String[]{branchDetails.getBranchno()}, null, null, null, null);
+        Cursor cursor = db.query(true, TABLE_FACE_DATA, new String[]{"id", "name", "memberID", "distance", "extra", "startTime", "endTime", "timeFormat", "userImg", "Branchno", "type"}, "Branchno = ?", new String[]{branchDetails.getBranchno()}, null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
                 byte[] imgByte = cursor.getBlob(8);
 
-                FaceData faceData = new FaceData(cursor.getString(0), cursor.getString(1), cursor.getString(2), Float.parseFloat(cursor.getString(3)), Utility.readByte(cursor.getBlob(4)), cursor.getString(5), cursor.getString(6), cursor.getString(7), BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length), cursor.getString(9));
+                FaceData faceData = new FaceData(cursor.getString(0), cursor.getString(1), cursor.getString(2), Float.parseFloat(cursor.getString(3)), Utility.readByte(cursor.getBlob(4)), cursor.getString(5), cursor.getString(6), cursor.getString(7), BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length), cursor.getString(9), cursor.getString(10));
                 faceList.add(faceData);
 
             } while (cursor.moveToNext());
@@ -326,6 +326,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 values.put("timeFormat", firebaseUserData.getTimeFormat());
                 values.put("userImg", getBitmapAsByteArray(Utility.getBitmapFromString(firebaseUserData.getUserImage())));
                 values.put("Branchno", firebaseUserData.getBranchno());
+                values.put("type", firebaseUserData.getType());
 
                 int rows = db.update(TABLE_FACE_DATA, values, "memberID" + " = " + firebaseUserData.getMemberID(), null);
                 if (rows == 0) {

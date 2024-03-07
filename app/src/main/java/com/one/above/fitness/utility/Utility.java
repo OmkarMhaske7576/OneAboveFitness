@@ -15,6 +15,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.YuvImage;
 import android.media.Image;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Base64;
 import android.util.Log;
@@ -361,4 +362,5 @@ public class Utility {
         dialogTextView.setText(dialogMessage);
         return dialog;
     }
+
 }

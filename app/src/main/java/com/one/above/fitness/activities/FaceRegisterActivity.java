@@ -18,6 +18,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.media.Image;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
@@ -113,6 +114,7 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
     FrameLayout cameraPreviewLayout;
     ConstraintLayout imgContainer;
     String timeFormat = "Fixed";
+    String userType = "Member";
     LinearLayout timeLayout;
     SQLiteDatabaseHandler db;
     Bitmap userImg = null;
@@ -184,6 +186,7 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
                     Utility.vibrateWithAnim(v);
                     if (userObj != null) {
                         updateImgInfo();
+
                     } else {
                         openCustomDialog();
                     }
@@ -426,7 +429,7 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
                     .setTitle("Add Image !!")
                     .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            saveData(userObj.getName(), userObj.getMemberID(), userObj.getStartTime(), userObj.getEndTime());
+                            saveData(userObj.getName(), userObj.getMemberID(), userObj.getStartTime(), userObj.getEndTime(), userObj.getType());
                             Utility.showToast(context, "Image successfully added !!");
                         }
                     })
@@ -450,11 +453,13 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
     public void openCustomDialog() {
 
         try {
+
             start = false;
 
             Button saveBtn, cancelBtn;
             EditText userName, memberId, startTime, endTime;
             Dialog dialog = new Dialog(FaceRegisterActivity.this);
+            RadioButton memberRadio, empRadio;
 
             dialog.setContentView(R.layout.custom_dialog_layout);
             dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -467,6 +472,8 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
             memberId = dialog.findViewById(R.id.memberId);
             startTime = dialog.findViewById(R.id.startTime);
             endTime = dialog.findViewById(R.id.endTime);
+            memberRadio = dialog.findViewById(R.id.memberRadio);
+            empRadio = dialog.findViewById(R.id.empRadio);
 
             endTime.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -489,10 +496,21 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
             timeLayout = dialog.findViewById(R.id.timeLayout);
 
             RadioGroup radioGroup = dialog.findViewById(R.id.radioGroup);
+            RadioGroup userTypeRadioGrp = dialog.findViewById(R.id.userTypeRadioGrp);
 
             RadioButton slotTimeRadio = dialog.findViewById(R.id.slotTimeRadio);
             RadioButton fixTimeRadio = dialog.findViewById(R.id.fixTimeRadio);
+            userTypeRadioGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
 
+                    if (memberRadio.isChecked()) {
+                        userType = "Member";
+                    } else {
+                        userType = "Employee";
+                    }
+                }
+            });
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -522,8 +540,7 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
                     if (slotTimeRadio.isChecked()) {
                         timeFormat = "Slot";
                     }
-
-                    saveData(userName.getText().toString(), memberId.getText().toString(), startTime.getText().toString(), endTime.getText().toString());
+                    saveData(userName.getText().toString(), memberId.getText().toString(), startTime.getText().toString(), endTime.getText().toString(), userType);
                     dialog.dismiss();
                 }
             });
@@ -548,21 +565,13 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
         }
     }
 
-    private void saveData(String name, String memberID, String startTime, String endTime) {
+    private void saveData(String name, String memberID, String startTime, String endTime, String type) {
 
         try {
 
             BranchData branchData = SharedPreference.getBranchDetails(context);
             if (branchData == null) {
                 Utility.showToast(context, "Please add branch details first ..");
-                start = true;
-                return;
-            }
-
-            JSONArray jsonArray = WebService.getLoginData(memberID, memberID);
-
-            if (jsonArray.length() == 0 || jsonArray.getJSONObject(0) == null || jsonArray.getJSONObject(0).getString("MemberNo").contains("No")) {
-                Utility.showToast(context, "Invalid user !!!");
                 start = true;
                 return;
             }
@@ -579,18 +588,37 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
                 return;
             }
 
+            JSONArray jsonArray = WebService.getLoginData(memberID, memberID, type);
+            if (type.equalsIgnoreCase("Member")) {
+                if (jsonArray.length() == 0 || jsonArray.getJSONObject(0) == null || jsonArray.getJSONObject(0).getString("MemberNo").contains("No")) {
+                    Utility.showToast(context, "Invalid user !!!");
+                    start = true;
+                    return;
+                }
+            } else {
+                if (jsonArray.length() == 0 || jsonArray.getJSONObject(0) == null) {
+                    Utility.showToast(context, "Invalid user !!!");
+                    start = true;
+                    return;
+                }
+            }
 
-            name = jsonArray.getJSONObject(0).getString("MemberName");
+            if (type.equalsIgnoreCase("Member")) {
+                name = jsonArray.getJSONObject(0).getString("MemberName");
+            } else {
+                name = jsonArray.getJSONObject(0).getString("EmpName");
+            }
+
             String Branchno = SharedPreference.getBranchDetails(context).getBranchno();
 
-            FaceData faceData = new FaceData(db.getFaceDataCount() + "", name, memberID, -1f, embeedings, startTime, endTime, timeFormat, userImg, Branchno);
+            FaceData faceData = new FaceData(db.getFaceDataCount() + "", name, memberID, -1f, embeedings, startTime, endTime, timeFormat, userImg, Branchno, userType);
 
             int selected = userObj == null ? 1 : 0;
             FaceImgData faceImgData = new FaceImgData(Utility.getUniqueId(), faceData.getMemberID(), faceData.getUserImage(), faceData.getExtra(), selected);
 
             if (userObj == null) {
                 db.addFaceData(faceData);
-                Utility.showToast(context, "User " + name + " successfully added !!");
+                new asyncForToast().execute("User " + name + " successfully added !!");
             }
             db.addImageData(faceImgData);
 
@@ -754,4 +782,16 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
         return resizedBitmap;
     }
 
+    public class asyncForToast extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... strings) {
+            String msg = strings[0];
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Utility.showToast(context, msg);
+                }
+            });
+            return null;
+        }
+    }
 }

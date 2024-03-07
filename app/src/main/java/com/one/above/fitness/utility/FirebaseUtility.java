@@ -1,12 +1,7 @@
 package com.one.above.fitness.utility;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.text.InputType;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
@@ -19,7 +14,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
-import com.one.above.fitness.R;
 import com.one.above.fitness.activities.SettingContainerActivity;
 import com.one.above.fitness.activities.SplashScreenActivity;
 import com.one.above.fitness.database.SQLiteDatabaseHandler;
@@ -55,7 +49,23 @@ public class FirebaseUtility {
 
         try {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialogTheme);
+            BranchData branchDetails = SharedPreference.getBranchDetails(context);
+
+            if (branchDetails != null) {
+                //String key = userDataRef.push().getKey();
+                String branchNo = branchDetails.getBranchno().trim();
+                SettingContainerActivity.dialog = Utility.showLoadingDialog("Uploading Data ...", context);
+                SettingContainerActivity.dialog.show();
+                uploadBranchData(branchDetails, context);
+                uploadUserData(db, branchNo, context);
+                uploadUserImgData(db, branchNo, context);
+                //  Utility.showToast(context, "Data successfully uploaded to server !!");
+
+            } else {
+                Utility.showToast(context, "Please add branch details first !!");
+            }
+
+           /* AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialogTheme);
             builder.setTitle("Upload Data !!!");
             LinearLayout linearLayout = new LinearLayout(context);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -102,18 +112,81 @@ public class FirebaseUtility {
             });
 
             builder.show();
-
+        */
         } catch (Exception e) {
             System.out.println(">>> error !!!!" + e.getMessage());
             e.printStackTrace();
         }
     }
-
     public static void getDataFromServer(Context context, SQLiteDatabaseHandler db) {
 
         try {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialogTheme);
+            BranchData branchDetails = SharedPreference.getBranchDetails(context);
+
+            if (branchDetails != null) {
+
+                String branchNo = branchDetails.getBranchno();
+                SettingContainerActivity.dialog = Utility.showLoadingDialog("Downloading Data ...", context);
+                SettingContainerActivity.dialog.show();
+
+                if (FirebaseUtility.userDataRef == null)
+                    SplashScreenActivity.initFirebaseConfig(context);
+
+                userDataRef.child(branchNo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        //  db.deleteAndRecreateTables();
+                        HashMap<String, FirebaseUserData> userData = new HashMap<>();
+                        if (task.isSuccessful()) {
+                            for (DataSnapshot ds : task.getResult().getChildren()) {
+                                userData.put(ds.getKey(), ds.getValue(FirebaseUserData.class));
+                            }
+                        } else {
+                            Log.d("TAG", task.getException().getMessage()); //Don't ignore potential errors!
+                        }
+                        Log.d("SERVER USER DATA", new Gson().toJson(userData));
+                        if (userData.size() > 0) {
+
+                            db.loadUserDataTolocal(userData);
+                        }
+                    }
+                });
+
+                if (FirebaseUtility.imageRef == null)
+                    SplashScreenActivity.initFirebaseConfig(context);
+
+                imageRef.child(branchNo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        HashMap<String, FirebaseImgData> imgData = new HashMap<>();
+                        if (task.isSuccessful()) {
+                            for (DataSnapshot ds : task.getResult().getChildren()) {
+                                for (DataSnapshot ds2 : ds.getChildren()) {
+                                    imgData.put(ds2.getKey(), ds2.getValue(FirebaseImgData.class));
+                                }
+                            }
+                        } else {
+                            Log.d("TAG", task.getException().getMessage()); //Don't ignore potential errors!
+                        }
+                        Log.d("SERVER IMAGE DATA", new Gson().toJson(imgData));
+                        if (imgData.size() > 0) {
+                            db.loadImgDataToLocal(imgData);
+                        }
+                        SettingContainerActivity.dialog.dismiss();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        SettingContainerActivity.dialog.dismiss();
+                        Utility.showToast(SettingContainerActivity.settingContainerActivity, "Something went wrong\nTry again!!");
+                    }
+                });
+            } else {
+                Utility.showToast(context, "Please add branch details first \nto download user details and images. !!");
+            }
+
+           /* AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialogTheme);
             builder.setTitle("Download data !!!");
             LinearLayout linearLayout = new LinearLayout(context);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -207,7 +280,7 @@ public class FirebaseUtility {
                 }
             });
 
-            builder.show();
+            builder.show();*/
 
         } catch (Exception e) {
             System.out.println(">>> error >>>" + e.getMessage());
@@ -270,7 +343,7 @@ public class FirebaseUtility {
             for (FaceData faceData : faceDataList) {
                 FirebaseUserData firebaseUserData = new FirebaseUserData(faceData.getId(), faceData.getName(), faceData.getMemberID(),
                         new Gson().toJson(faceData.getDistance()), new Gson().toJson(faceData.getExtra()), faceData.getStartTime(),
-                        faceData.getEndTime(), faceData.getTimeFormat(), Utility.getStringFromBitmap(faceData.getUserImage()), faceData.getBranchno());
+                        faceData.getEndTime(), faceData.getTimeFormat(), Utility.getStringFromBitmap(faceData.getUserImage()), faceData.getBranchno(), faceData.getType());
                 finalMap.put(faceData.getMemberID(), firebaseUserData);
             }
             if (FirebaseUtility.userDataRef == null)

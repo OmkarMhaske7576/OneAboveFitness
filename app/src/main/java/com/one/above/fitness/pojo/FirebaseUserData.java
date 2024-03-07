@@ -12,10 +12,11 @@ public class FirebaseUserData {
     private String userImage;
     private String Branchno;
 
+    private String type;
     public FirebaseUserData() {
     }
     public FirebaseUserData(String id, String name, String memberID, String distance, String extra, String startTime, String endTime, String timeFormat,
-                            String userImage, String Branchno) {
+                            String userImage, String Branchno, String type) {
         this.id = id;
         this.name = name;
         this.memberID = memberID;
@@ -26,6 +27,15 @@ public class FirebaseUserData {
         this.timeFormat = timeFormat;
         this.userImage = userImage;
         this.Branchno = Branchno;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getId() {

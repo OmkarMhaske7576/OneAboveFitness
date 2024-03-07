@@ -2,8 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:background="@color/AppTransparentColor">
+    android:background="@color/AppTransparentColor"
+    android:gravity="center_vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -184,19 +184,17 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/infraccionesPopUpFolio"
+                android:id="@+id/empLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/infraccionesPopUpCausa"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/userDetail"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/successBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/inBtn"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/btn_success"
                     android:text="IN"
@@ -204,9 +202,9 @@
                     android:textColor="@color/white" />
 
                 <Button
-                    android:id="@+id/CancelBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/outBtn"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/button_background"
                     android:text="OUT"

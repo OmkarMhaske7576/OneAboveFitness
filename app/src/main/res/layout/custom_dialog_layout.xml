@@ -6,6 +6,7 @@
     android:layout_gravity="center"
     android:layout_marginLeft="50dp"
     android:layout_marginRight="50dp"
+    android:background="@color/white"
     android:padding="10dp">
 
     <LinearLayout
@@ -117,6 +118,54 @@
                 app:layout_constraintHorizontal_bias="0.184"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:text="Select Type : "
+                android:textColor="@color/black" />
+
+            <RadioGroup
+                android:id="@+id/userTypeRadioGrp"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.834"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/memberRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="33dp"
+                    android:checked="true"
+                    android:text="Member"
+                    android:layout_marginRight="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/empRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="33dp"
+                    android:text="Employee"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.655"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </RadioGroup>
 
         </LinearLayout>
 

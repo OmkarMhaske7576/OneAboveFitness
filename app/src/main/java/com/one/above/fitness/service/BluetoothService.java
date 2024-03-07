@@ -1,10 +1,12 @@
 package com.one.above.fitness.service;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -16,15 +18,12 @@ import org.json.JSONArray;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class BluetoothService {
     public BluetoothService(Context context) {
         this.mContext = context;
     }
 
-    public static Timer timer = null;
     private String BluetoothDeviceName = "Microcub";
     private Context mContext;
     public static DataOutputStream outputStream;
@@ -36,7 +35,9 @@ public class BluetoothService {
     private clientSock clientSock = null;
     private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     public static BluetoothSocket clientSocket;
-    private void sendDataViaBluetooth() {
+
+    @SuppressLint("MissingPermission")
+    private void sendDataViaBluetooth(String type) {
         try {
             BluetoothDeviceName = SharedPreference.getBluetoothDeviceName(mContext);
             if (clientSocket == null)
@@ -81,7 +82,7 @@ public class BluetoothService {
             }
 
             if (clientSocket.isConnected()) {
-                clientSock.write();
+                clientSock.write(type);
             }
 
         } catch (Exception e) {
@@ -89,7 +90,7 @@ public class BluetoothService {
         }
     }
 
-    public void startBluetoothService(String message, String no) {
+    public void startBluetoothService(String message, String no, String type) {
         try {
 
             BluetoothDeviceName = SharedPreference.getBluetoothDeviceName(mContext);
@@ -102,13 +103,14 @@ public class BluetoothService {
 
                 Msg = message;
                 memberNo = no;
-                sendDataViaBluetooth();
+                sendDataViaBluetooth(type);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @SuppressLint("MissingPermission")
     private BluetoothSocket getBluetoothSocket() {
         BluetoothSocket mBSocket = null;
 
@@ -143,14 +145,14 @@ public class BluetoothService {
     }
 
     public class clientSock {
-        public void write() {
+        public void write(String type) {
             try {
                 Log.d(TAG, ">>> clientSock >>> write >>>");
                 //  if (!isDataSend && !isFlashDataSend) {
                 outputStream.writeBytes(Msg); // anything you want
                 outputStream.flush();
                 Log.d(TAG, "Write success !! >" + Msg);
-                if (Msg.equalsIgnoreCase("ON")) {
+                if (Msg.equalsIgnoreCase("ON") && type.equalsIgnoreCase("Member")) {
                     new AsyncCall().execute();
                 }
                 //discardRequestForSpecificTime();
@@ -167,25 +169,9 @@ public class BluetoothService {
 
     }
 
-    private void discardRequestForSpecificTime() {
-
-        if (timer == null) {
-            timer = new Timer();
-            timer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    if (isDataSend) isDataSend = false;
-                    if (isFlashDataSend) isFlashDataSend = false;
-                    Log.d(TAG, ">>>> discardRequestForSpecificTime >>>" + isDataSend);
-                }
-            }, 0, 1000);
-        } else {
-            //timer.cancel();
-        }
-    }
-
     private class AsyncCall extends AsyncTask<Void, Void, Void> {
         JSONArray jsonArray = null;
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -200,9 +186,15 @@ public class BluetoothService {
             if (jsonArray != null && jsonArray.length() > 0) {
                 Log.d(TAG, ">>>> server response >>>" + jsonArray.toString());
                 Utility.showToast(mContext, "Attendance saved successfully !!");
-                Msg = "FOFF";
-                clientSock.write();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Msg = "FOFF";
+                        clientSock.write("");
+                    }
+                }, 1000);
             }
         }
+
     }
 }

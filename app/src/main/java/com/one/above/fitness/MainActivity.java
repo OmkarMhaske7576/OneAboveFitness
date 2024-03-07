@@ -36,7 +36,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -67,7 +66,6 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-import com.one.above.fitness.activities.LoginSuccessActivity;
 import com.one.above.fitness.activities.SettingContainerActivity;
 import com.one.above.fitness.database.SQLiteDatabaseHandler;
 import com.one.above.fitness.database.SharedPreference;
@@ -597,10 +595,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openPopupWindow(final View view, JSONObject jsonObject) {
-
+        String memberNo;
         try {
 
-            String memberNo = jsonObject.getString("MemberNo");
+            if (Utility.currentLoginUser.getType().equalsIgnoreCase("Member")) {
+                memberNo = jsonObject.getString("MemberNo");
+            } else {
+                memberNo = jsonObject.getString("EmpNo");
+            }
 
             //   save attendance and call bluetooth service
             Log.d("memberNo", memberNo);
@@ -631,65 +633,91 @@ public class MainActivity extends AppCompatActivity {
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
             Button cancel = popupView.findViewById(R.id.cancel);
-
-            Button CancelBtn = popupView.findViewById(R.id.CancelBtn);
-
             TextView userName = popupView.findViewById(R.id.userName);
-
             ImageView userImg = popupView.findViewById(R.id.userImg);
-
             TextView planName = popupView.findViewById(R.id.planName);
             TextView endDate = popupView.findViewById(R.id.endDate);
             TextView ProgramName = popupView.findViewById(R.id.ProgramName);
+
+            LinearLayout empLayout = popupView.findViewById(R.id.empLayout);
+            Button inBtn = popupView.findViewById(R.id.inBtn);
+            Button outBtn = popupView.findViewById(R.id.outBtn);
 
             nameTxt = popupView.findViewById(R.id.nameTxt);
             accTxt = popupView.findViewById(R.id.accTxt);
             membershipTxt = popupView.findViewById(R.id.membershipTxt);
 
+            if (Utility.currentLoginUser != null) {
+                if (Utility.currentLoginUser.getType().equalsIgnoreCase("Employee")) {
+                    empLayout.setVisibility(View.VISIBLE);
+                    userName.setText(userName.getText().toString() + "\"" + jsonObject.getString("EmpName") + "\"");
 
-            Button successBtn = popupView.findViewById(R.id.successBtn);
+                    nameTxt.setText(jsonObject.getString("EmpName"));
+                    accTxt.setText(jsonObject.getString("Active"));
+                    membershipTxt.setVisibility(View.GONE);
 
-            userName.setText(userName.getText().toString() + "\"" + jsonObject.getString("MemberName") + "\"");
+                    userImg.setImageBitmap(Utility.currentLoginUser.getUserImage());
+                    planName.setVisibility(View.GONE);
+                    endDate.setVisibility(View.GONE);
+                    ProgramName.setVisibility(View.GONE);
 
-            nameTxt.setText(jsonObject.getString("MemberName"));
-            accTxt.setText(jsonObject.getString("Active"));
-            membershipTxt.setText(jsonObject.getString("Membershipstatus"));
+                } else {
+                    empLayout.setVisibility(View.GONE);
+                    userName.setText(userName.getText().toString() + "\"" + jsonObject.getString("MemberName") + "\"");
 
-            userImg.setImageBitmap(Utility.currentLoginUser.getUserImage());
+                    nameTxt.setText(jsonObject.getString("MemberName"));
+                    accTxt.setText(jsonObject.getString("Active"));
+                    membershipTxt.setText(jsonObject.getString("Membershipstatus"));
 
-            JSONObject planDetails = WebService.getPlanDetails(jsonObject.getString("MemberNo"), jsonObject.getString("Branchno")).getJSONObject(0);
-            if (planDetails.length() > 0) {
-                planName.setText(planName.getText().toString() + planDetails.getString("PlanName"));
-                endDate.setText(endDate.getText().toString() + planDetails.getString("EndDt"));
-                ProgramName.setText(ProgramName.getText().toString() + planDetails.getString("ProgramName"));
+                    userImg.setImageBitmap(Utility.currentLoginUser.getUserImage());
+
+                    JSONObject planDetails = WebService.getPlanDetails(jsonObject.getString("MemberNo"), jsonObject.getString("Branchno")).getJSONObject(0);
+                    if (planDetails.length() > 0) {
+                        planName.setText(planName.getText().toString() + planDetails.getString("PlanName"));
+                        endDate.setText(endDate.getText().toString() + planDetails.getString("EndDt"));
+                        ProgramName.setText(ProgramName.getText().toString() + planDetails.getString("ProgramName"));
+                    }
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            popupWindow.dismiss();
+                        }
+                    }, dialogTime);
+                }
             }
+            inBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AsyncCallForEmpService().execute(memberNo, "1");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            bluetoothService.startBluetoothService("FOFF", "", "");
+                        }
+                    }, 1000);
+                    popupWindow.dismiss();
+                }
+            });
+            outBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AsyncCallForEmpService().execute(memberNo, "0");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            bluetoothService.startBluetoothService("FOFF", "", "");
+                        }
+                    }, 1000);
+
+                    popupWindow.dismiss();
+                }
+            });
 
             popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
 
                     homeBtn.callOnClick();
-                }
-            });
-
-            successBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    try {
-
-                        Toast.makeText(getApplicationContext(), "Welcome " + Utility.currentLoginUser.getName(), Toast.LENGTH_LONG).show();
-
-                        popupWindow.dismiss();
-
-                        Intent intent = new Intent(getApplicationContext(), LoginSuccessActivity.class);
-
-                        finish();
-
-                        startActivity(intent);
-
-                    } catch (Exception e) {
-                    }
                 }
             });
 
@@ -701,35 +729,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            CancelBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    try {
-
-                        Toast.makeText(getApplicationContext(), "By user " + Utility.currentLoginUser.getName(), Toast.LENGTH_LONG).show();
-
-                        popupWindow.dismiss();
-
-                        Intent intent = new Intent(getApplicationContext(), LoginSuccessActivity.class);
-
-                        finish();
-
-                        startActivity(intent);
-
-                    } catch (Exception e) {
-
-                    }
-                }
-            });
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    popupWindow.dismiss();
-                }
-            }, dialogTime);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -740,12 +739,15 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
-            JSONArray jsonArray = WebService.getLoginData(userName, password);
+            JSONArray jsonArray = WebService.getLoginData(userName, password, Utility.currentLoginUser.getType());
 
             if (jsonArray.length() > 0) {
                 JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                if (jsonObject != null && !jsonObject.getString("MemberNo").equalsIgnoreCase("No")) {
+                if (Utility.currentLoginUser.getType().equalsIgnoreCase("Member") && jsonObject != null && !jsonObject.getString("MemberNo").equalsIgnoreCase("No")) {
+                    openPopupWindow(view, jsonObject);
+                    start = false;
+                } else if (Utility.currentLoginUser.getType().equalsIgnoreCase("Employee")) {
                     openPopupWindow(view, jsonObject);
                     start = false;
                 }
@@ -766,8 +768,6 @@ public class MainActivity extends AppCompatActivity {
                 }*/
 
             }
-
-            Log.d(TAG, jsonArray.getJSONObject(0).getString("MemberName"));
 
         } catch (Exception e) {
 
@@ -825,7 +825,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (!isUserFound && start) {
-                    bluetoothService.startBluetoothService("FOFF","");
+                    bluetoothService.startBluetoothService("FOFF", "", "");
                     Utility.showToast(context, "USER NOT FOUND !! \nPLEASE RETRY AGAIN !!");
                     homeBtn.callOnClick();
                 }
@@ -834,6 +834,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("MissingPermission")
     private final BroadcastReceiver mBroadcastReceiver4 = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -910,6 +911,29 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private class AsyncCallForEmpService extends AsyncTask<String, Void, Void> {
+
+        JSONArray jsonArray = null;
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            String memberNo = strings[0];
+            String status = strings[1];
+            jsonArray = WebService.saveEmpAttendance(memberNo, status);
+            Log.d(TAG, "Response >>>" + new Gson().toJson(jsonArray));
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            if (jsonArray != null && jsonArray.length() > 0) {
+                Log.d(TAG, ">>>> server response >>>" + jsonArray.toString());
+                Utility.showToast(context, "Employee Attendance\nsaved successfully !!");
+            }
+        }
+    }
+
     private class AsyncCallForBluetooth extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -918,7 +942,8 @@ public class MainActivity extends AppCompatActivity {
             String memberNo = strings[1];
             Log.d(TAG, ">>> message >>>" + message + ">>>> member no >>" + memberNo);
             bluetoothService = new BluetoothService(MainActivity.this);
-            bluetoothService.startBluetoothService(message, memberNo);
+            String type = Utility.currentLoginUser == null ? "" : Utility.currentLoginUser.getType();
+            bluetoothService.startBluetoothService(message, memberNo, type);
             return null;
         }
     }

@@ -63,7 +63,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 public class SettingContainerActivity extends AppCompatActivity {
     LinearLayout scanQR_saveAttendance, saveDirectoryData, bluetoothSetting, branchSetting, faceRegister, viewMembers, uploadData, downloadData, dialogTimeSetting, hyperParameterSetting;
     SQLiteDatabaseHandler db;
@@ -77,7 +76,6 @@ public class SettingContainerActivity extends AppCompatActivity {
     ImageButton backBtn;
     Interpreter tfLite;
     String modelFile = "mobile_face_net.tflite";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -132,7 +130,6 @@ public class SettingContainerActivity extends AppCompatActivity {
                     }
                 }
             });
-
             scanQR_saveAttendance.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -140,7 +137,6 @@ public class SettingContainerActivity extends AppCompatActivity {
                     startActivity(new Intent(SettingContainerActivity.this, ScanQRActivity.class));
                 }
             });
-
             branchSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -157,7 +153,8 @@ public class SettingContainerActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Utility.vibrateWithAnim(v);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingContainerActivity.this, R.style.MyAlertDialogTheme);
+                    hyperparameters();
+                    /*AlertDialog.Builder builder = new AlertDialog.Builder(SettingContainerActivity.this, R.style.MyAlertDialogTheme);
 
                     builder.setTitle("Change Parameters !!!");
                     LinearLayout linearLayout = new LinearLayout(SettingContainerActivity.this);
@@ -191,7 +188,7 @@ public class SettingContainerActivity extends AppCompatActivity {
                         }
                     });
 
-                    builder.show();
+                    builder.show();*/
                 }
             });
 
@@ -202,7 +199,6 @@ public class SettingContainerActivity extends AppCompatActivity {
                     changeDialogTime();
                 }
             });
-
             downloadData.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -210,7 +206,6 @@ public class SettingContainerActivity extends AppCompatActivity {
                     FirebaseUtility.getDataFromServer(SettingContainerActivity.this, db);
                 }
             });
-
             uploadData.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -224,8 +219,13 @@ public class SettingContainerActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     Utility.vibrateWithAnim(v);
+                    FaceData faceData1 = null;
+                    v.startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.bounce));
+                    Intent intent = new Intent(getApplicationContext(), FaceRegisterActivity.class);
+                    intent.putExtra("USER-OBJ", faceData1);
+                    startActivity(intent);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingContainerActivity.this, R.style.MyAlertDialogTheme);
+                   /* AlertDialog.Builder builder = new AlertDialog.Builder(SettingContainerActivity.this, R.style.MyAlertDialogTheme);
 
                     builder.setTitle("Register Face !!!");
 
@@ -273,7 +273,7 @@ public class SettingContainerActivity extends AppCompatActivity {
                         }
                     });
 
-                    builder.show();
+                    builder.show();*/
                 }
             });
 
@@ -290,8 +290,8 @@ public class SettingContainerActivity extends AppCompatActivity {
     }
 
     private void confirmToAdd() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(SettingContainerActivity.this, R.style.MyAlertDialogTheme);
+        openBranchDetailsPopup();
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(SettingContainerActivity.this, R.style.MyAlertDialogTheme);
 
         builder.setTitle("Confirm !!!");
 
@@ -335,7 +335,7 @@ public class SettingContainerActivity extends AppCompatActivity {
             }
         });
 
-        builder.show();
+        builder.show();*/
     }
 
     private void openBranchDetailsPopup() {
@@ -565,7 +565,6 @@ public class SettingContainerActivity extends AppCompatActivity {
             }
         }
     }
-
     private void saveImgData(Uri imageUri) {
         try {
             boolean flipX = false;
@@ -660,7 +659,7 @@ public class SettingContainerActivity extends AppCompatActivity {
                 return;
             }
 
-            JSONArray jsonArray = WebService.getLoginData(memberID, memberID);
+            JSONArray jsonArray = WebService.getLoginData(memberID, memberID,"Member");
 
             if (jsonArray.length() == 0 || jsonArray.getJSONObject(0) == null || jsonArray.getJSONObject(0).getString("MemberNo").contains("No")) {
                 Utility.showToast(context, "Invalid user !! " + memberID);
@@ -679,7 +678,7 @@ public class SettingContainerActivity extends AppCompatActivity {
 
             String name = jsonArray.getJSONObject(0).getString("MemberName");
             String branchNo = branchData.getBranchno();
-            FaceData faceData = new FaceData(db.getFaceDataCount() + "", name, memberID, -1f, embeedings, startTime, endTime, timeFormat, userImg, branchNo);
+            FaceData faceData = new FaceData(db.getFaceDataCount() + "", name, memberID, -1f, embeedings, startTime, endTime, timeFormat, userImg, branchNo,"Member");
 
             FaceImgData faceImgData = new FaceImgData(Utility.getUniqueId(), faceData.getMemberID(), faceData.getUserImage(), faceData.getExtra(), 1);
 

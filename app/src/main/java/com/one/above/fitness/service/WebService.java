@@ -31,14 +31,14 @@ public class WebService {
     private static int TimeOut = 2000000;
     public static int timeoutFlag = 0;
     private static String URL_SOAP = "";
-    private static final String URL_LOGIN = "http://oneabovefit.ezeeclub.net/MobileAppService.svc/UserLogin";
-    private static final String URL_ATTENDANCE = "http://oneabovefit.ezeeclub.net/MobileAppService.svc/SaveAttendance";// Make
+    private static final String URL_LOGIN_MEMBER = "http://oneabovefit.ezeeclub.net/MobileAppService.svc/UserLogin";
+    private static final String URL_LOGIN_EMPLOYEE = "http://oneabovefit.ezeeclub.net/MobileAppService.svc/employeeLogin";
+    private static final String URL_ATTENDANCE_MEMBER = "http://oneabovefit.ezeeclub.net/MobileAppService.svc/SaveAttendance";// Make
+    private static final String URL_ATTENDANCE_EMPLOYEE = "http://oneabovefit.ezeeclub.net/MobileAppService.svc/EmployeeAttendance";// Make
     private static final String SOAP_ACTION = "http://tempuri.org/";
-
     private static final String URL_BRANCH_DETAILS = "http://oneabovefit.ezeeclub.net/MobileAppService.svc/GetBranchDetails";// Make
     static SoapSerializationEnvelope envelope;
     static JSONArray jobj = null;
-
     public static JSONArray getSoapData(String UserName, String Password,
                                         String webMethName) {
 
@@ -118,16 +118,18 @@ public class WebService {
         return jsonObj;
     }
 
-    public static JSONArray saveAttendance(String MemberNo) {
+    public static JSONArray saveEmpAttendance(String MemberNo, String status) {
 
         JSONArray jsonArray = new JSONArray();
-
+        JSONObject jsonParam;
+        URL url;
         try {
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
+            jsonParam = new JSONObject();
+            url = new URL(URL_ATTENDANCE_EMPLOYEE);
 
-            URL url = new URL(URL_ATTENDANCE);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -135,7 +137,68 @@ public class WebService {
             conn.setDoOutput(true);
             conn.setDoInput(true);
 
-            JSONObject jsonParam = new JSONObject();
+            jsonParam.put("MemberNo", MemberNo);
+            jsonParam.put("Inout", status);
+
+            Log.i("JSON", jsonParam.toString());
+            DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+            //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+            os.writeBytes(jsonParam.toString());
+
+            os.flush();
+            os.close();
+
+            Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+            Log.i("MSG", conn.getResponseMessage());
+
+            int responseCode = conn.getResponseCode();
+
+            System.out.println("response code >>>!" + responseCode);
+
+            if (responseCode >= 200 && responseCode < 300) {
+                System.out.println("Request successful!");
+                if (responseCode == HttpURLConnection.HTTP_OK) { // success
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+                    Log.w("Response HTTP >>>: ", response.toString());
+                    if (!response.toString().equals(null))
+                        jsonArray = new JSONArray(response.toString());
+                }
+            }
+
+            conn.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jsonArray;
+    }
+
+    public static JSONArray saveAttendance(String MemberNo) {
+
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonParam;
+        URL url;
+        try {
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            jsonParam = new JSONObject();
+            url = new URL(URL_ATTENDANCE_MEMBER);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+
             jsonParam.put("MemberNo", MemberNo);
 
             Log.i("JSON", jsonParam.toString());
@@ -294,16 +357,22 @@ public class WebService {
         return jsonArray;
     }
 
-    public static JSONArray getLoginData(String userName, String password) {
+    public static JSONArray getLoginData(String userName, String password, String type) {
 
         JSONArray jsonArray = new JSONArray();
+        URL url;
 
         try {
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            URL url = new URL(URL_LOGIN);
+            if (type.equalsIgnoreCase("Employee")) {
+                url = new URL(URL_LOGIN_EMPLOYEE);
+            } else {
+                url = new URL(URL_LOGIN_MEMBER);
+            }
+
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -312,8 +381,15 @@ public class WebService {
             conn.setDoInput(true);
 
             JSONObject jsonParam = new JSONObject();
-            jsonParam.put("UserName", userName);
-            jsonParam.put("Password", password);
+            if (type.equalsIgnoreCase("Employee")) {
+                jsonParam.put("MemberName", userName);
+                jsonParam.put("PassWord", password);
+            } else {
+                jsonParam.put("Password", password);
+                jsonParam.put("UserName", userName);
+            }
+
+            System.out.println(">>>> login >>>>>>");
 
             Log.i("JSON", jsonParam.toString());
             DataOutputStream os = new DataOutputStream(conn.getOutputStream());
