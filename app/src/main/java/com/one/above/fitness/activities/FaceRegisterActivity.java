@@ -570,6 +570,7 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
         try {
 
             BranchData branchData = SharedPreference.getBranchDetails(context);
+
             if (branchData == null) {
                 Utility.showToast(context, "Please add branch details first ..");
                 start = true;
@@ -591,13 +592,13 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
             JSONArray jsonArray = WebService.getLoginData(memberID, memberID, type);
             if (type.equalsIgnoreCase("Member")) {
                 if (jsonArray.length() == 0 || jsonArray.getJSONObject(0) == null || jsonArray.getJSONObject(0).getString("MemberNo").contains("No")) {
-                    Utility.showToast(context, "Invalid user !!!");
+                    Utility.showToast(context, "Invalid user !!");
                     start = true;
                     return;
                 }
             } else {
-                if (jsonArray.length() == 0 || jsonArray.getJSONObject(0) == null) {
-                    Utility.showToast(context, "Invalid user !!!");
+                if (jsonArray.length() == 0 || jsonArray.getJSONObject(0) == null || jsonArray.getJSONObject(0).getString("EmpNo").contains("No")) {
+                    Utility.showToast(context, "Invalid user !!\nUser not found!");
                     start = true;
                     return;
                 }
@@ -609,7 +610,7 @@ public class FaceRegisterActivity extends AppCompatActivity implements Serializa
                 name = jsonArray.getJSONObject(0).getString("EmpName");
             }
 
-            String Branchno = SharedPreference.getBranchDetails(context).getBranchno();
+            String Branchno = branchData.getBranchno();
 
             FaceData faceData = new FaceData(db.getFaceDataCount() + "", name, memberID, -1f, embeedings, startTime, endTime, timeFormat, userImg, Branchno, userType);
 

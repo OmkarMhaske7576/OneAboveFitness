@@ -16,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.one.above.fitness.MainActivity;
 import com.one.above.fitness.R;
 import com.one.above.fitness.database.SharedPreference;
-import com.one.above.fitness.service.ApplicationService;
 import com.one.above.fitness.utility.FirebaseUtility;
 import com.one.above.fitness.utility.Utility;
 
@@ -31,7 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.splash_screen_activity);
-            startService(new Intent(SplashScreenActivity.this, ApplicationService.class));
+//            startService(new Intent(SplashScreenActivity.this, ApplicationService.class));
 
             context = getApplicationContext();
 
@@ -114,7 +113,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     public static void initFirebaseConfig(Context context) {
 
-        Log.d("SplashScreen","================================ initFirebaseConfig ================== ");
+        Log.d("SplashScreen", "================================ initFirebaseConfig ================== ");
         try {
 
             FirebaseApp.initializeApp(context, FirebaseUtility.options, FirebaseUtility.DEFAULT);

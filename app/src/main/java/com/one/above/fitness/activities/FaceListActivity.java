@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -19,6 +20,7 @@ import com.one.above.fitness.R;
 import com.one.above.fitness.database.SQLiteDatabaseHandler;
 import com.one.above.fitness.helper.MemberListAdapter;
 import com.one.above.fitness.pojo.FaceData;
+import com.one.above.fitness.utility.FirebaseUtility;
 
 @SuppressLint("MissingInflatedId")
 public class FaceListActivity extends AppCompatActivity {
@@ -28,6 +30,7 @@ public class FaceListActivity extends AppCompatActivity {
     public static RecyclerView recycler;
     public static FaceListActivity faceListActivity;
     ImageButton backBtn;
+    Button refreshBtn;
     public static Context mContext;
 
     @Override
@@ -43,6 +46,7 @@ public class FaceListActivity extends AppCompatActivity {
             recycler = findViewById(R.id.recycler);
             searchEdit = findViewById(R.id.searchEdit);
             backBtn = findViewById(R.id.backBtn);
+            refreshBtn = findViewById(R.id.refreshBtn);
 
             mContext = getApplicationContext();
 
@@ -57,6 +61,13 @@ public class FaceListActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     onBackPressed();
+                }
+            });
+
+            refreshBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseUtility.getDataFromServer(FaceListActivity.this, db);
                 }
             });
 

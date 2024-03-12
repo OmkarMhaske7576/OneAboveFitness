@@ -1,7 +1,12 @@
 package com.one.above.fitness.utility;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.text.InputType;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
@@ -14,10 +19,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.one.above.fitness.R;
+import com.one.above.fitness.activities.FaceListActivity;
 import com.one.above.fitness.activities.SettingContainerActivity;
 import com.one.above.fitness.activities.SplashScreenActivity;
 import com.one.above.fitness.database.SQLiteDatabaseHandler;
 import com.one.above.fitness.database.SharedPreference;
+import com.one.above.fitness.helper.MemberListAdapter;
 import com.one.above.fitness.pojo.BranchData;
 import com.one.above.fitness.pojo.FaceData;
 import com.one.above.fitness.pojo.FaceImgData;
@@ -49,29 +57,13 @@ public class FirebaseUtility {
 
         try {
 
-            BranchData branchDetails = SharedPreference.getBranchDetails(context);
-
-            if (branchDetails != null) {
-                //String key = userDataRef.push().getKey();
-                String branchNo = branchDetails.getBranchno().trim();
-                SettingContainerActivity.dialog = Utility.showLoadingDialog("Uploading Data ...", context);
-                SettingContainerActivity.dialog.show();
-                uploadBranchData(branchDetails, context);
-                uploadUserData(db, branchNo, context);
-                uploadUserImgData(db, branchNo, context);
-                //  Utility.showToast(context, "Data successfully uploaded to server !!");
-
-            } else {
-                Utility.showToast(context, "Please add branch details first !!");
-            }
-
-           /* AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialogTheme);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialogTheme);
             builder.setTitle("Upload Data !!!");
             LinearLayout linearLayout = new LinearLayout(context);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
             final EditText password = new EditText(context);
             password.setInputType(InputType.TYPE_CLASS_TEXT);
-            password.setHint("Enter password \"123456\" to upload data to server !!!");
+            password.setHint("Enter password \"123456\" to upload data on server !!");
             linearLayout.addView(password);
             builder.setView(linearLayout);
 
@@ -112,12 +104,13 @@ public class FirebaseUtility {
             });
 
             builder.show();
-        */
+
         } catch (Exception e) {
             System.out.println(">>> error !!!!" + e.getMessage());
             e.printStackTrace();
         }
     }
+
     public static void getDataFromServer(Context context, SQLiteDatabaseHandler db) {
 
         try {
@@ -147,8 +140,12 @@ public class FirebaseUtility {
                         }
                         Log.d("SERVER USER DATA", new Gson().toJson(userData));
                         if (userData.size() > 0) {
-
                             db.loadUserDataTolocal(userData);
+                            if (FaceListActivity.accessoryListAdapter != null) {
+                                FaceListActivity.accessoryListAdapter = new MemberListAdapter(context, db.getAllFaces(context));
+                                FaceListActivity.recycler.setAdapter(FaceListActivity.accessoryListAdapter);
+                                FaceListActivity.accessoryListAdapter.notifyDataSetChanged();
+                            }
                         }
                     }
                 });
@@ -172,6 +169,11 @@ public class FirebaseUtility {
                         Log.d("SERVER IMAGE DATA", new Gson().toJson(imgData));
                         if (imgData.size() > 0) {
                             db.loadImgDataToLocal(imgData);
+                            if (FaceListActivity.accessoryListAdapter != null) {
+                                FaceListActivity.accessoryListAdapter = new MemberListAdapter(context, db.getAllFaces(context));
+                                FaceListActivity.recycler.setAdapter(FaceListActivity.accessoryListAdapter);
+                                FaceListActivity.accessoryListAdapter.notifyDataSetChanged();
+                            }
                         }
                         SettingContainerActivity.dialog.dismiss();
                     }

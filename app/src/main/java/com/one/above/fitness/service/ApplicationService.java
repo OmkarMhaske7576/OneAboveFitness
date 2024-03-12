@@ -4,10 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import com.one.above.fitness.bluetooth_communication.BluetoothCommunication;
-
 public class ApplicationService extends Service {
 
     @Override

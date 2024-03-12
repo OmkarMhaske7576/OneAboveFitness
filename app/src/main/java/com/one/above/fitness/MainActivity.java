@@ -84,7 +84,9 @@ import org.tensorflow.lite.Interpreter;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -414,6 +416,75 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private String getBirthOrAnniversaryMsg(JSONObject jsonObject) {
+        String birthDate = "";
+        String anniversaryDate = "";
+        try {
+            birthDate = jsonObject.getString("BirthDate");
+            anniversaryDate = jsonObject.getString("AnniversaryDate");
+
+            java.sql.Date date1 = new java.sql.Date((new Date()).getTime());
+
+            SimpleDateFormat formatNowDay = new SimpleDateFormat("dd");
+            SimpleDateFormat formatNowMonth = new SimpleDateFormat("MM");
+            String currentDay = formatNowDay.format(date1);
+            String currentMonth = formatNowMonth.format(date1);
+
+            if (birthDate.split("/")[0].equalsIgnoreCase(currentDay) && birthDate.split("/")[1].equalsIgnoreCase(currentMonth)) {
+                return "Happy Birthday";
+            } else if (anniversaryDate.split("/")[0].equalsIgnoreCase(currentDay) && anniversaryDate.split("/")[1].equalsIgnoreCase(currentMonth)) {
+                return "Happy Anniversary";
+            }
+
+            Log.d("Date>>>", "dd >>" + currentDay + ">>mm >>" + currentMonth);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private void showBirthLayout(final View view, String msg, int dialogTime) {
+        TextView birthTxt;
+        ImageView userImg;
+        Button cancel;
+
+        try {
+            LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.birthaday_annivarsary_dailog, null);
+            int width = LinearLayout.LayoutParams.MATCH_PARENT;
+            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            popupWindow.setOnDismissListener(null);
+
+            userImg = popupView.findViewById(R.id.userImg);
+            birthTxt = popupView.findViewById(R.id.birthTxt);
+            cancel = popupView.findViewById(R.id.cancel);
+
+            Log.d("UserImg", new Gson().toJson(Utility.currentLoginUser));
+            userImg.setImageBitmap(Utility.currentLoginUser.getUserImage());
+            birthTxt.setText(msg + " \"" + Utility.currentLoginUser.getName() + "\" !!");
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cameraProvider.unbindAll();
+                    popupWindow.dismiss();
+                }
+            });
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    cameraProvider.unbindAll();
+                    popupWindow.dismiss();
+                }
+            }, dialogTime);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void generateQR() {
 
         BranchData branchData = SharedPreference.getBranchDetails(getApplicationContext());
@@ -595,8 +666,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openPopupWindow(final View view, JSONObject jsonObject) {
+
         String memberNo;
+
         try {
+
+            isUserFound = true;
+            start = false;
+            cameraProvider.unbindAll();
+
+            int dialogTime = SharedPreference.getDialogTimer(getApplicationContext());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    String msg = getBirthOrAnniversaryMsg(jsonObject);
+                    if (msg.trim().length() > 0)
+                        showBirthLayout(view, msg, dialogTime);
+                }
+            }, 1000);
 
             if (Utility.currentLoginUser.getType().equalsIgnoreCase("Member")) {
                 memberNo = jsonObject.getString("MemberNo");
@@ -611,12 +698,6 @@ public class MainActivity extends AppCompatActivity {
                 data[1] = memberNo;
                 new AsyncCallForBluetooth().execute(data);
             }
-
-            isUserFound = true;
-
-            int dialogTime = SharedPreference.getDialogTimer(getApplicationContext());
-
-            start = false;
 
             TextView nameTxt, accTxt, membershipTxt;
 
@@ -677,12 +758,14 @@ public class MainActivity extends AppCompatActivity {
                         endDate.setText(endDate.getText().toString() + planDetails.getString("EndDt"));
                         ProgramName.setText(ProgramName.getText().toString() + planDetails.getString("ProgramName"));
                     }
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            popupWindow.dismiss();
-                        }
-                    }, dialogTime);
+                    if (Utility.currentLoginUser.getType().equalsIgnoreCase("Member")) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                popupWindow.dismiss();
+                            }
+                        }, dialogTime);
+                    }
                 }
             }
             inBtn.setOnClickListener(new View.OnClickListener() {
@@ -708,15 +791,13 @@ public class MainActivity extends AppCompatActivity {
                             bluetoothService.startBluetoothService("FOFF", "", "");
                         }
                     }, 1000);
-
                     popupWindow.dismiss();
                 }
             });
-
             popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
-
+                    //bluetoothService.startBluetoothService("FOFF", "", "");
                     homeBtn.callOnClick();
                 }
             });
@@ -862,6 +943,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+/*
     public void enableDisableBT() {
         if (mBluetoothAdapter == null) {
             Log.d(TAG, "enableDisableBT: Does not have BT capabilities.");
@@ -879,6 +961,7 @@ public class MainActivity extends AppCompatActivity {
             bluetoothTxt.setText("Bluetooth : On || Device name : " + deviceName);
         }
     }
+*/
 
     private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {

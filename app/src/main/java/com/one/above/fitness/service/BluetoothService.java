@@ -18,12 +18,15 @@ import org.json.JSONArray;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BluetoothService {
     public BluetoothService(Context context) {
         this.mContext = context;
     }
 
+    Timer timer;
     private String BluetoothDeviceName = "Microcub";
     private Context mContext;
     public static DataOutputStream outputStream;
@@ -155,7 +158,7 @@ public class BluetoothService {
                 if (Msg.equalsIgnoreCase("ON") && type.equalsIgnoreCase("Member")) {
                     new AsyncCall().execute();
                 }
-                //discardRequestForSpecificTime();
+                Thread.sleep(1000);
                 isFlashDataSend = true;
                 isDataSend = true;
                 //  }
@@ -166,12 +169,27 @@ public class BluetoothService {
                 return;
             }
         }
-
     }
+
+    private void discardRequestForSpecificTime() {
+        if (timer == null) {
+            timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    if (isDataSend)
+                        isDataSend = false;
+                    Log.d(TAG, ">>>> discardRequestForSpecificTime >>>" + isDataSend);
+                }
+            }, 0, 4000);
+        } else {
+            //timer.cancel();
+        }
+    }
+
 
     private class AsyncCall extends AsyncTask<Void, Void, Void> {
         JSONArray jsonArray = null;
-
 
         @Override
         protected Void doInBackground(Void... voids) {

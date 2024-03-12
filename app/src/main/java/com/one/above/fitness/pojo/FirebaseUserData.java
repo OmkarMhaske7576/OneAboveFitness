@@ -11,7 +11,6 @@ public class FirebaseUserData {
     private String timeFormat;
     private String userImage;
     private String Branchno;
-
     private String type;
     public FirebaseUserData() {
     }

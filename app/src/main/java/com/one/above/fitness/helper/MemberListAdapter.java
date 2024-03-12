@@ -63,7 +63,6 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Re
                     holder.userImg.setImageBitmap(faceImgData.getImageData());
                 }
             }
-
             holder.addFace.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
