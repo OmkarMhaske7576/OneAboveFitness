@@ -57,6 +57,8 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Re
 
             holder.name.setText("Name : " + faceData.getName());
             holder.memberId.setText("Member Id : " + faceData.getMemberID());
+            holder.type.setText("Type : " + faceData.getType());
+            System.out.println(">>. type >>>" + faceData.getType());
             LinkedList<FaceImgData> imageDataById = db.getImageDataById(faceData.getMemberID());
             for (FaceImgData faceImgData : imageDataById) {
                 if (faceImgData.getIsSelected() == 1) {
@@ -134,7 +136,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Re
                         String dataString = mOriginalValues.get(i).getName();
                         String dataMemberId = mOriginalValues.get(i).getMemberID();
                         if (dataMemberId.toLowerCase().startsWith(constraint.toString()) || dataString.toLowerCase().startsWith(constraint.toString())) {
-                            FilteredArrList.add(new FaceData(mOriginalValues.get(i).getId(), mOriginalValues.get(i).getName(), mOriginalValues.get(i).getMemberID(), mOriginalValues.get(i).getDistance(), mOriginalValues.get(i).getExtra(), mOriginalValues.get(i).getStartTime(), mOriginalValues.get(i).getEndTime(), mOriginalValues.get(i).getTimeFormat(), mOriginalValues.get(i).getUserImage(),mOriginalValues.get(i).getBranchno(),mOriginalValues.get(i).getType()));
+                            FilteredArrList.add(new FaceData(mOriginalValues.get(i).getId(), mOriginalValues.get(i).getName(), mOriginalValues.get(i).getMemberID(), mOriginalValues.get(i).getDistance(), mOriginalValues.get(i).getExtra(), mOriginalValues.get(i).getStartTime(), mOriginalValues.get(i).getEndTime(), mOriginalValues.get(i).getTimeFormat(), mOriginalValues.get(i).getUserImage(), mOriginalValues.get(i).getBranchno(), mOriginalValues.get(i).getType()));
                         }
                     }
                     // set the Filtered result to return
@@ -155,7 +157,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Re
     static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         ImageView userImg;
-        TextView name, memberId;
+        TextView name, memberId, type;
         LinearLayout userLayout;
         Button addFace, viewFaces, deleteMember;
 
@@ -164,6 +166,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Re
 
             name = view.findViewById(R.id.name);
             memberId = view.findViewById(R.id.memberId);
+            type = view.findViewById(R.id.type);
             userImg = view.findViewById(R.id.userImg);
             userLayout = view.findViewById(R.id.userLayout);
             addFace = view.findViewById(R.id.addFace);

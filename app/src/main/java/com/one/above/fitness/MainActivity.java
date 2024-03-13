@@ -50,6 +50,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -446,8 +447,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void showBirthLayout(final View view, String msg, int dialogTime) {
         TextView birthTxt;
-        ImageView userImg;
+        ImageView anniversaryImg;
         Button cancel;
+        LottieAnimationView happyBirthdayAnim;
 
         try {
             LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
@@ -458,13 +460,21 @@ public class MainActivity extends AppCompatActivity {
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
             popupWindow.setOnDismissListener(null);
 
-            userImg = popupView.findViewById(R.id.userImg);
+            anniversaryImg = popupView.findViewById(R.id.anniversaryImg);
+            happyBirthdayAnim = popupView.findViewById(R.id.happyBirthdayAnim);
             birthTxt = popupView.findViewById(R.id.birthTxt);
             cancel = popupView.findViewById(R.id.cancel);
 
             Log.d("UserImg", new Gson().toJson(Utility.currentLoginUser));
-            userImg.setImageBitmap(Utility.currentLoginUser.getUserImage());
-            birthTxt.setText(msg + " \"" + Utility.currentLoginUser.getName() + "\" !!");
+            if (msg.contains("Birthday")) {
+                happyBirthdayAnim.setVisibility(View.VISIBLE);
+                anniversaryImg.setVisibility(View.GONE);
+            } else if (msg.contains("Anniversary")) {
+                anniversaryImg.setVisibility(View.VISIBLE);
+                happyBirthdayAnim.setVisibility(View.GONE);
+            }
+
+            birthTxt.setText(msg + "\n" + Utility.currentLoginUser.getName() + " !");
             cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

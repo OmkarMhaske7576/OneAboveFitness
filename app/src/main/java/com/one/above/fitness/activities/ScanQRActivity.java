@@ -72,10 +72,10 @@ public class ScanQRActivity extends AppCompatActivity {
             if (intentResult.getContents() == null) {
                 Utility.showToast(context, "Cancelled !!");
             } else {
-                // QR format memberId@@branchNo@@type@@date@@time
+                // QR format memberId@@branchNo@@date@@time
                 String barcodeData = intentResult.getContents();
                 Log.d(TAG, "barcode data  >>> " + barcodeData);
-                new AsyncCall().execute(barcodeData.split("@@")[0],barcodeData.split("@@")[2]);
+                new AsyncCall().execute(barcodeData.split("@@")[0], "Member");
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -86,14 +86,14 @@ public class ScanQRActivity extends AppCompatActivity {
         Log.d("memberNo", memberNo);
         if (memberNo.trim().length() > 0) {
             bluetoothService = new BluetoothService(ScanQRActivity.this);
-            bluetoothService.startBluetoothService("ON", memberNo,type);
+            bluetoothService.startBluetoothService("ON", memberNo, type);
         }
     }
 
     private class AsyncCall extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... strings) {
-            saveAttendance(strings[0],strings[1]);
+            saveAttendance(strings[0], strings[1]);
             return null;
         }
     }

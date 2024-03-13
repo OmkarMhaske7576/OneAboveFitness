@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/userLayout"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="140dp"
     android:layout_marginBottom="2dp"
     android:background="@drawable/rectangle_outline_bg"
     android:gravity="center_vertical"
@@ -36,6 +36,13 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/memberId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Member Id : "
+            android:textSize="@dimen/normalTxt" />
+
+        <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,10 +50,10 @@
             android:textSize="@dimen/normalTxt" />
 
         <TextView
-            android:id="@+id/memberId"
+            android:id="@+id/type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Member Id : "
+            android:text="Type : "
             android:textSize="@dimen/normalTxt" />
 
 
